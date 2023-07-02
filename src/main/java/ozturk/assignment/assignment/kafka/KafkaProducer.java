@@ -4,16 +4,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.SendResult;
 import org.springframework.stereotype.Service;
+import ozturk.assignment.assignment.model.Message;
 
 import java.util.concurrent.CompletableFuture;
 
 @Service
 public class KafkaProducer {
     @Autowired
-    private KafkaTemplate<String, String> kafkaTemplate;
+    private KafkaTemplate<String, Message> kafkaTemplate;
 
-    public void sendMessageToKafka(String topicName, String message){
-        CompletableFuture<SendResult<String, String>> future = kafkaTemplate.send(topicName, message);
+    public void sendMessageToKafka(String topicName, Message message){
+        CompletableFuture<SendResult<String, Message>> future = kafkaTemplate.send(topicName, message);
         future.whenComplete((result, ex) -> {
             if (ex == null) {
                 System.out.println("Sent message=[" + message + "] with offset=[" + result.getRecordMetadata().offset() + "]");

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ozturk.assignment.assignment.kafka.KafkaProducer;
+import ozturk.assignment.assignment.model.Message;
 
 @RestController
 @RequestMapping(value = "/api/kafka")
@@ -21,12 +22,12 @@ public class KafkaController {
     private String topicName;
 
     @PostMapping("/produce")
-    public ResponseEntity<String> sendMessage(@RequestBody String message)
+    public ResponseEntity<String> sendMessage(@RequestBody Message message)
     {
         for(int i=0;i<100;i++) {
             kafkaProducerService.sendMessageToKafka(
                     topicName,
-                    message + " " + i
+                    message
             );
         }
         return new ResponseEntity<>("Done", HttpStatus.OK);
