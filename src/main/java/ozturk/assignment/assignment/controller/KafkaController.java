@@ -17,7 +17,7 @@ public class KafkaController {
     @Autowired
     private KafkaProducer kafkaProducerService;
 
-    @Value("{ozturk.topic.name}")
+    @Value("${ozturk.topic.name}")
     private String topicName;
 
     @PostMapping("/produce")
