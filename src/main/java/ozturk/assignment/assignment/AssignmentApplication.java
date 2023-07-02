@@ -22,9 +22,10 @@ public class AssignmentApplication {
 	@Bean
 	CommandLineRunner createDefaultRecords (){
 		return args -> {
-			roleRepository.save(new Role(EnumRole.ROLE_USER));
-			roleRepository.save(new Role(EnumRole.ROLE_ADMIN));
+			if(roleRepository.existsByName(EnumRole.ROLE_USER))
+				roleRepository.save(new Role(EnumRole.ROLE_USER));
+			if(roleRepository.existsByName(EnumRole.ROLE_ADMIN))
+				roleRepository.save(new Role(EnumRole.ROLE_ADMIN));
 		};
 	}
-
 }

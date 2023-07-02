@@ -1,21 +1,8 @@
 version: '3.9'
 
 services:
-  postgres_db:
-    image: postgres:15
-    ports:
-      - "5432:5432"
-    environment:
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_USER: postgres
-      POSTGRES_DB: postgres
-    networks:
-      - custom_network
-    volumes:
-      - pg-data:/var/lib/postgresql/data
   java_app:
-    image: bilalozturk/midas_assignment:1.0.0
-    restart: always
+    image: bilalozturk/midas_assignment
     build: .
     ports:
       - "8080:8080"
@@ -26,12 +13,12 @@ services:
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
     depends_on:
       - postgres_db
-    networks:
-      - custom_network
-
-networks:
-  custom_network:
-    driver: bridge
-
-volumes:
-  pg-data: {}
+  postgres_db:
+    image: postgres:15
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_DB: postgres
